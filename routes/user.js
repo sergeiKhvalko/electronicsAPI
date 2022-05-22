@@ -1,11 +1,8 @@
 const express = require("express");
+const { createUser } = require("../controllers/user");
 
 const router = express.Router();
 
-router.get("/user", (req, res) => {
-  res.json({
-    data: "hey you hit user API endpoint",
-  });
-});
+router.get("/user", createUser);
 
 module.exports = router;
