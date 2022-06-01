@@ -16,16 +16,16 @@ exports.list = async (req, res) => {
 };
 
 exports.read = async (req, res) => {
-  const sub = Sub.findOne({ slug: req.params.slug }).exec();
-  res.json(sub);
+  const sub = await Sub.findOne({ slug: req.params.slug }).exec();
+  return res.json(sub);
 };
 
 exports.update = async (req, res) => {
-  const { name } = req.body;
+  const { name, parent } = req.body;
   try {
     const updated = await Sub.findOneAndUpdate(
       { slug: req.params.slug },
-      { name, slug: slugify(name) },
+      { name, parent, slug: slugify(name) },
       { new: true }
     );
     res.json(updated);
