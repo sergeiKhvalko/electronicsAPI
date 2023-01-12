@@ -11,7 +11,7 @@ const {productsCount, list, listAll, remove, searchFilters} = require("../contro
 router.post("/products", list);
 router.get("/products/total", productsCount);
 router.get("/products/:count", listAll); // products/100
-router.delete("product/:slug", authCheck, adminCheck, remove);
+router.delete("/product/:slug", authCheck, adminCheck, remove);
 
 // search
 router.post("/search/filters", searchFilters);
