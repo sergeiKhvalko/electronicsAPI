@@ -1,8 +1,14 @@
 const Product = require("../models/product");
 
-exports.productsCount = async(req, res) => {
-	let total =  await Product.find({}).estimatedDocumentCount().exec();
-	res.json(total);
+exports.remove = async(req, res) => {
+	try {
+		const deleted = await Product.findOneAndRemove({
+			slug: req.params.slug
+		}).exec();
+		res.json(deleted);
+	} catch (err) {
+		return res.status(400).send("Product delete failed");
+	}
 }
 
 // WITHOUT PAGINATION
@@ -56,6 +62,11 @@ exports.listAll = async(req, res) => {
 	} catch(err) {
 		console.log(err);
 	}
+}
+
+exports.productsCount = async(req, res) => {
+	let total =  await Product.find({}).estimatedDocumentCount().exec();
+	res.json(total);
 }
 
 
@@ -162,6 +173,7 @@ const handleColor = async (req, res, color) => {
 };
 
 const handleBrand = async (req, res, brand) => {
+	console.dir(brand)
 	const products = await Product.find({ brand })
 		.populate("category", "_id name")
 		.populate("subs", "_id name")
