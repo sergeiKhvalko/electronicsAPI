@@ -110,6 +110,22 @@ exports.productsCount = async(req, res) => {
 	res.json(total);
 }
 
+exports.listRelated = async (req, res) => {
+	const product = await Product.findById(req.params.productId).exec();
+
+	const related = await Product.find({
+		_id: { $ne: product._id },
+		category: product.category,
+	})
+		.limit(3)
+		.populate("category")
+		.populate("subs")
+		.populate({path: "ratings.postedBy"})
+		.exec();
+
+	res.json(related);
+};
+
 
 // SERACH / FILTER
 
