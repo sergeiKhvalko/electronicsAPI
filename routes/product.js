@@ -14,7 +14,8 @@ const {
 	searchFilters,
 	read,
 	update,
-	listRelated
+	listRelated,
+	productStar
 } = require("../controllers/product");
 
 // routes
@@ -31,6 +32,9 @@ router.post("/search/filters", searchFilters);
 
 // related
 router.get("/product/related/:productId", listRelated);
+
+// rating
+router.put("/product/star/:productId", authCheck, productStar);
 
 
 module.exports = router;
