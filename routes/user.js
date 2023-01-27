@@ -5,7 +5,13 @@ const router = express.Router();
 const { authCheck } = require("../middleware/auth");
 
 // controllers
-const { addToWishlist, removeFromWishlist } = require("../controllers/user");
+const {
+	userCart,
+	addToWishlist,
+	removeFromWishlist
+} = require("../controllers/user");
+
+router.post("/user/cart", authCheck, userCart); //save cart
 
 // wishlist
 router.post("/user/wishlist", authCheck, addToWishlist);
